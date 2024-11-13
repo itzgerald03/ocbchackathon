@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Accessible Banking</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <header class="navbar">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="dashboard.html">Home</a></li>
+        <li><a href="transfer.html">Transfer Funds</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h1>Welcome to Accessible Banking</h1>
+      <div class="user-info">
+        <h2 id="userName">Hello, User!</h2>
+      </div>
+    </header>
+
+    <div class="account-info">
+      <h3>Your Account Overview</h3>
+      <div class="account-selection">
+        <label for="accountSelect">Select an Account:</label>
+        <select id="accountSelect" onchange="loadAccountData()">
+          <!-- Options will be populated dynamically -->
+        </select>
+      </div>
+      <div class="balance-card">
+        <h4>Balance</h4>
+        <p id="balance">$0.00</p>
+      </div>
+      <div class="recent-transactions">
+        <h4>Recent Transactions</h4>
+        <ul id="transactionList"></ul>
+      </div>
+    </div>
+
+    <div class="settings">
+      <h3>Accessibility Settings</h3>
+      <label for="colorModeSelect">Color Blindness Mode:</label>
+      <select id="colorModeSelect">
+        <option value="default">Default</option>
+        <option value="deuteranopia">Deuteranopia (Red-Green Blindness)</option>
+        <option value="tritanopia">Tritanopia (Blue-Yellow Blindness)</option>
+        <option value="protanopia">Protanopia (Red-Green Blindness)</option>
+      </select>
+
+      <div class="voice-controls">
+        <button id="startRecognition">Start Voice Recognition</button>
+        <p id="output">Say "help" for available commands</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

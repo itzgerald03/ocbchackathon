@@ -1,0 +1,134 @@
+/* Importing Geomanist font */
+@import url('https://fonts.googleapis.com/css2?family=Geomanist:wght@400;500;700&display=swap');
+
+/* Global Styles */
+body {
+  font-family: 'Geomanist', sans-serif;
+  background-color: #FFFFFF;
+  color: #333333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #E11A27; /* OCBC Red */
+  color: #FFFFFF;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+#logoutBtn {
+  background-color: #C2181C; /* Darker OCBC Red */
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#logoutBtn:hover {
+  background-color: #a91617; /* Even darker red */
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 1.8rem;
+  color: #E11A27;
+}
+
+.user-info h2 {
+  margin: 10px 0;
+}
+
+/* Account Info */
+.account-info {
+  margin: 20px 0;
+}
+
+.account-selection label {
+  font-weight: 500;
+}
+
+.account-selection select {
+  margin-left: 10px;
+}
+
+.balance-card {
+  margin-top: 15px;
+}
+
+.balance-card h4 {
+  font-size: 1.2rem;
+  color: #333333;
+}
+
+.balance-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #E11A27; /* OCBC Red */
+}
+
+.recent-transactions ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.recent-transactions ul li {
+  padding: 8px 0;
+  border-bottom: 1px solid #E11A27;
+}
+
+/* Accessibility Settings */
+.settings {
+  margin-top: 40px;
+}
+
+.voice-controls {
+  margin-top: 10px;
+}
+
+.voice-controls button {
+  background-color: #E11A27;
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.voice-controls button:hover {
+  background-color: #C2181C;
+}
