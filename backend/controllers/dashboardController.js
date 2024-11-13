@@ -7,15 +7,18 @@ exports.getDashboardData = async (req, res) => {
   try {
     // Get all accounts for the user
     const accounts = await AccountModel.getAccountsByUserId(userId);
+    console.log("Fetched Accounts:", accounts); // Log accounts
     if (accounts.length === 0) {
       return res.status(404).json({ message: "No accounts found" });
     }
 
     // Get the selected account ID from the query or default to the first account
     const accountId = req.query.accountId || accounts[0].account_id;
+    console.log("Selected Account ID:", accountId); // Log selected account ID
 
     // Get transactions for the selected account
     const transactions = await TransactionModel.getTransactionsByAccountId(accountId);
+    console.log("Fetched Transactions:", transactions); // Log transactions
 
     // Return accounts, selected account balance, and transactions
     res.status(200).json({

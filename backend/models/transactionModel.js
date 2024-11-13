@@ -8,6 +8,7 @@ const TransactionModel = {
         "SELECT transaction_type, amount, transaction_date, description FROM transactions WHERE account_id = $1 ORDER BY transaction_date DESC",
         [accountId]
       );
+      console.log("Transaction Query Result:", result.rows); // Log query result
       return result.rows;
     } catch (error) {
       console.error("Error fetching transactions:", error);

@@ -9,7 +9,10 @@ VALUES (
 
 -- Insert a sample account for the user
 INSERT INTO accounts (user_id, account_type, balance)
-VALUES (1, 'Savings', 5000.00);
+VALUES (1, 'Savings', 5000.00),
+       (1, 'Current', 0).
+       (2, 'Savings', 3000.00),
+       (2, 'Current', 1000.00);;
 
 -- Insert sample transactions
 INSERT INTO transactions (account_id, transaction_type, amount, description)

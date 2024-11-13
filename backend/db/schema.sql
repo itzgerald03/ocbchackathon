@@ -26,3 +26,13 @@ CREATE TABLE transactions (
     transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     description TEXT
 );
+
+-- Create transfers table
+CREATE TABLE transfers (
+    transfer_id SERIAL PRIMARY KEY,
+    from_account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
+    to_account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
+    amount DECIMAL(12, 2) NOT NULL CHECK (amount > 0),
+    transfer_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    description TEXT
+);

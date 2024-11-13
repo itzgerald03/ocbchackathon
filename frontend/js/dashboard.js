@@ -5,7 +5,7 @@ const transactionList = document.getElementById("transactionList");
 const userNameElement = document.getElementById("userName");
 const logoutBtn = document.getElementById("logoutBtn");
 
-// Retrieve userId from localStorage
+// Retrieve user details from localStorage
 const userId = localStorage.getItem("userId");
 const userName = localStorage.getItem("userName");
 
@@ -14,18 +14,15 @@ if (userName) {
   userNameElement.textContent = `Hello, ${userName}!`;
 }
 
+// Logout functionality
 logoutBtn.addEventListener("click", () => {
-    // Clear localStorage
-    localStorage.clear();
-  
-    // Redirect to login page
-    window.location.href = "index.html";
-  });
-  
+  localStorage.clear();
+  window.location.href = "index.html";
+});
+
 // Fetch and render dashboard data
-async function loadAccountData(accountId = null) {
+async function loadDashboardData(accountId = null) {
   if (!userId) {
-    console.error("User ID not found. Please log in again.");
     window.location.href = "index.html";
     return;
   }
@@ -34,14 +31,16 @@ async function loadAccountData(accountId = null) {
     const response = await fetch(`/api/dashboard?userId=${userId}&accountId=${accountId || ""}`);
     const data = await response.json();
 
+    console.log("Dashboard API Response:", data); // Debug log
+
     if (response.ok) {
-      // Populate account dropdown
-      populateAccountDropdown(data.accounts);
+      // Populate dropdown with accounts if not already populated
+      if (accountSelect.options.length === 0) {
+        populateAccountDropdown(data.accounts);
+      }
 
-      // Update balance
+      // Update balance and transactions for the selected account
       balanceElement.textContent = `$${data.balance.toFixed(2)}`;
-
-      // Populate transactions
       populateTransactions(data.transactions);
     } else {
       console.error("Failed to fetch dashboard data:", data.message);
@@ -51,38 +50,57 @@ async function loadAccountData(accountId = null) {
   }
 }
 
-// Populate account dropdown
+// Populate the account dropdown
 function populateAccountDropdown(accounts) {
+  const storedAccountId = localStorage.getItem("selectedAccountId"); // Retrieve stored account ID
   accountSelect.innerHTML = ""; // Clear existing options
+
+  console.log("Populating Accounts Dropdown:", accounts); // Debug log
   accounts.forEach((account) => {
     const option = document.createElement("option");
     option.value = account.account_id;
-
-    // Ensure balance is valid before calling toFixed
-    const balance = account.balance ? parseFloat(account.balance).toFixed(2) : "0.00";
-
     option.textContent = `${account.account_type} Account`;
     accountSelect.appendChild(option);
   });
+
+  // Set the dropdown to the stored account ID or the first account
+  if (storedAccountId && accounts.some((acc) => acc.account_id.toString() === storedAccountId)) {
+    accountSelect.value = storedAccountId;
+    loadDashboardData(storedAccountId); // Load data for the stored account ID
+  } else if (accounts.length > 0) {
+    const firstAccountId = accounts[0].account_id;
+    accountSelect.value = firstAccountId;
+    localStorage.setItem("selectedAccountId", firstAccountId); // Save the default account ID
+    loadDashboardData(firstAccountId); // Load data for the first account
+  }
 }
 
-// Populate transaction list
+// Populate the transactions list
 function populateTransactions(transactions) {
-  transactionList.innerHTML = ""; // Clear existing transactions
+  transactionList.innerHTML = ""; // Clear the list
+
+  if (transactions.length === 0) {
+    transactionList.innerHTML = "<li>No transactions available</li>";
+    return;
+  }
+
   transactions.forEach((transaction) => {
+    const formattedAmount = parseFloat(transaction.amount).toFixed(2); // Parse and format the amount
+    const formattedDate = new Date(transaction.transaction_date).toLocaleString(); // Format the date
+
     const li = document.createElement("li");
-    li.textContent = `${transaction.transaction_date}: ${transaction.transaction_type} - $${transaction.amount.toFixed(
-      2
-    )} (${transaction.description})`;
+    li.textContent = `${formattedDate}: ${transaction.transaction_type} - $${formattedAmount}`;
     transactionList.appendChild(li);
   });
 }
 
-// Add event listener for account selection change
+// Event listener for account dropdown change
 accountSelect.addEventListener("change", () => {
   const selectedAccountId = accountSelect.value;
-  loadAccountData(selectedAccountId);
+  console.log("Switching to Account ID:", selectedAccountId); // Debug log
+  localStorage.setItem("selectedAccountId", selectedAccountId); // Save the selected account ID
+  loadDashboardData(selectedAccountId); // Fetch and display data for the selected account
 });
 
 // Initial data load
-loadAccountData();
+loadDashboardData(localStorage.getItem("selectedAccountId") || null); // Use stored account ID or default

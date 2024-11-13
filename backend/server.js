@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const authRoutes = require("./routes/authRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const transferRoutes = require("./routes/transferRoutes");
 const pool = require("./config");
-const dashboardRoutes = require("./routes/dashboardRoutes")
 
 const app = express();
 app.use(cors());
@@ -16,17 +17,17 @@ pool.query("SELECT NOW()", (err, res) => {
   } else {
     console.log("Database connected:", res.rows[0]);
   }
-  // Do NOT call pool.end() here
 });
 
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// Routes
+// API Routes
 app.use("/api", authRoutes);
 app.use("/api", dashboardRoutes);
+app.use("/api", transferRoutes);
 
-// Root route
+// Root Route
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
@@ -37,8 +38,9 @@ app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
+// Gracefully close the pool on server shutdown
 process.on("SIGINT", async () => {
   console.log("Shutting down server...");
-  await pool.end(); // Close the database pool when the server shuts down
+  await pool.end();
   process.exit(0);
 });

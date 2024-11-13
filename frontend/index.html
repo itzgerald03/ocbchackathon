@@ -22,38 +22,6 @@
     <p>Don't have an account? <a href="register.html">Sign up here</a></p>
   </div>
 
-  <script>
-    const loginForm = document.getElementById("loginForm");
-    const errorMessage = document.getElementById("errorMessage");
-
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault(); // Prevent form submission
-
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      try {
-        const response = await fetch("/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-        if (response.status === 200) {
-          // Successful login
-          window.location.href = "dashboard.html"; // Redirect to dashboard
-        } else {
-          // Show error message
-          errorMessage.textContent = data.message;
-        }
-      } catch (error) {
-        console.error("Error during login:", error);
-        errorMessage.textContent = "Something went wrong. Please try again.";
-      }
-    });
-  </script>
+  <script src="js/login.js"></script>
 </body>
 </html>

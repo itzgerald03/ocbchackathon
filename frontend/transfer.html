@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfer Funds | Accessible Banking</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/colorMode.js" defer></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand-logo">OCBC Banking</div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="dashboard.html">Home</a></li>
+            <li><a href="transfer.html"  class="active">Transfer Funds</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+        <button id="logoutBtn">Logout</button>
+      </header>
+
+  <div class="transfer-container">
+    <h1>Transfer Funds</h1>
+    <form id="transferForm">
+      <label for="fromAccount">From Account:</label>
+      <select id="fromAccount"></select>
+
+      <label for="toAccount">To Account:</label>
+      <select id="toAccount"></select>
+
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" min="1" step="0.01" placeholder="Enter amount" required>
+
+      <label for="description">Description (optional):</label>
+      <input type="text" id="description" placeholder="Enter description">
+
+      <button type="submit">Transfer</button>
+    </form>
+    <p id="errorMessage" class="error-message"></p>
+    <p id="successMessage" class="success-message"></p>
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <filter id="deuteranopia">
+      <feColorMatrix
+        type="matrix"
+        values="0.625 0.375 0 0 0
+                0.7 0.3 0 0 0
+                0 0.3 0.7 0 0
+                0 0 0 1 0" />
+    </filter>
+    <filter id="protanopia">
+      <feColorMatrix
+        type="matrix"
+        values="0.567 0.433 0 0 0
+                0.558 0.442 0 0 0
+                0 0.242 0.758 0 0
+                0 0 0 1 0" />
+    </filter>
+    <filter id="tritanopia">
+      <feColorMatrix
+        type="matrix"
+        values="0.95 0.05 0 0 0
+                0 0.433 0.567 0 0
+                0 0.475 0.525 0 0
+                0 0 0 1 0" />
+    </filter>
+  </svg>
+
+  <script src="js/transfer.js"></script>
+</body>
+</html>
